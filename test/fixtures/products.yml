@@ -2,12 +2,18 @@
 
 one:
   title: MyString
-  description: 
-  image_url: MyString
+  description: MyText
+  image_url: lorem.jpg
   price: 9.99
 
 two:
   title: MyString
-  description: 
-  image_url: MyString
+  description: MyText
+  image_url: lorem.jpg
   price: 9.99
+
+ruby:
+  title: Programming Ruby 1.9
+  description: Your mom
+  price: 42.23
+  image_url: ruby.jpg
