@@ -2,7 +2,7 @@ require 'test_helper'
 
 class LineItemsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @line_item = line_items(:one)
+    @line_item = line_items(:three)
   end
   
   test "should get index" do
@@ -60,4 +60,5 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     assert_match /<tr class=\\"line-item-highlight/, @response.body
   end
 
+  
 end

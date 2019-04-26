@@ -1,6 +1,6 @@
 class LineItemsController < ApplicationController
   include CurrentCart
-  before_action :set_cart, only: [:create]
+  before_action :set_cart, only: [:create, :decrease, :increase]
   before_action :set_line_item, only: [:show, :edit, :update, :destroy]
   
   # GET /line_items
@@ -64,6 +64,35 @@ class LineItemsController < ApplicationController
  
     end
   end
+
+  def decrement
+    @cart = Cart.find(session[:cart_id])
+    @line_item = LineItem.find_by_id(params[:id])
+    
+    # did it in the cart-model first, but that does not allow to redirect correctly
+    if @line_item.quantity > 1
+      @line_item.quantity -= 1
+      if @line_item.save
+        respond_to do |format|
+          format.html { redirect_to store_index_url, notice: 'Line item was successfully decreased.' }
+          
+          format.js { @current_item = @line_item }
+          format.json { render :show, status: :ok, location: @line_item }
+        end
+      end
+    else
+      # call the destroy-method and run all associated
+      @line_item.destroy
+      respond_to do |format|
+        format.html { redirect_to store_index_url, notice: 'Line item was deleted' }
+        format.js { @current_item = @line_item }
+        format.json { render :show, status: :ok, location: @line_item }
+        end
+    end
+  end
+    
+
+  
   
   private
   # Use callbacks to share common setup or constraints between actions.
